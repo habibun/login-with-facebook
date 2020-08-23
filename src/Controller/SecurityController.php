@@ -33,7 +33,6 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         //facebook
-
         $appId = $this->getParameter('fb.app_id');
         $appSecret = $this->getParameter('fb.app_secret');
         $fb = new Facebook([
@@ -127,6 +126,49 @@ class SecurityController extends AbstractController
         $user = $response->getGraphUser();
 
         dump($user);
+
+        exit('getting callback');
+    }
+
+    /**
+     * @Route("/fb-callback-js", name="fb_callback_js")
+     */
+    public function fbCallbackJs()
+    {
+        if(!session_id()) {
+            session_start();
+        }
+
+        //facebook
+        $fb = new Facebook([
+            'app_id' => $this->getParameter('fb.app_id'),
+            'app_secret' => $this->getParameter('fb.app_secret'),
+            'default_graph_version' => 'v2.10',
+        ]);
+
+//        dump($_SESSION); exit();
+        $helper = $fb->getJavaScriptHelper();
+
+        try {
+            $accessToken = $helper->getAccessToken();
+        } catch(FacebookResponseException $e) {
+            // When Graph returns an error
+            echo 'Graph returned an error: ' . $e->getMessage();
+            exit;
+        } catch(FacebookSDKException $e) {
+            // When validation fails or other local issues
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            exit;
+        }
+
+        if (! isset($accessToken)) {
+            echo 'No cookie set or no OAuth data could be obtained from cookie.';
+            exit;
+        }
+
+        // Logged in
+        echo '<h3>Access Token !!!</h3>';
+        var_dump($accessToken->getValue());
 
         exit('getting callback');
     }
