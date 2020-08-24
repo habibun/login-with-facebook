@@ -12,3 +12,7 @@
 ###> phpstorm ###
 /.idea/
 ###< phpstorm> ###
+
+###> phpcs ###
+/.php_cs.cache
+###< phpcs> ###

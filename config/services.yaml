@@ -31,3 +31,8 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Service\FbPhp: ~
+    App\Service\FbJs: ~
+    App\Service\FbInterface $fbPhp: '@App\Service\FbPhp'
+    App\Service\FbInterface $fbJs: '@App\Service\FbJs'

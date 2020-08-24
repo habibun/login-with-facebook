@@ -24,6 +24,13 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="bigint", nullable=true)
+     */
+    private $fbId;
+
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -110,5 +117,23 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFbId(): int
+    {
+        return $this->fbId;
+    }
+
+    /**
+     * @param int $fbId
+     * @return User
+     */
+    public function setFbId(int $fbId): User
+    {
+        $this->fbId = $fbId;
+        return $this;
     }
 }
