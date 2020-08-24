@@ -74,7 +74,7 @@ class FbPhp implements FbInterface
 
         try {
             // Returns a `Facebook\FacebookResponse` object
-            $response = $fb->get('/me?fields=id,name', $accessToken);
+            $response = $fb->get('/me?fields=id,name, email', $accessToken);
         } catch (FacebookResponseException $e) {
             echo 'Graph returned an error: '.$e->getMessage();
             exit;
